@@ -55,8 +55,8 @@ interface FCAGenerator {
 
 val apiContent = """import "../../../../../../core/api_client/api_client.dart";
     
-class ${folder.name.capitalize()}ApiService {
-  ${folder.name.capitalize()}ApiService({required this.apiClient});
+class ${folder.name.split("_").map { item -> item.capitalize() }.joinToString("")}ApiService {
+  ${folder.name.split("_").map { item -> item.capitalize() }.joinToString("")}ApiService({required this.apiClient});
 
   final ApiClient apiClient;
 }    
@@ -65,10 +65,10 @@ class ${folder.name.capitalize()}ApiService {
 val repImplContent = """import "../../domain/repositories/${folder.name}_repository.dart";
 import "../data_sources/${folder.name}_api_service.dart";
 
-class ${folder.name.capitalize()}RepositoryImpl implements ${folder.name.capitalize()}Repository {
-  ${folder.name.capitalize()}RepositoryImpl({required this.${folder.name}ApiService});
+class ${folder.name.split("_").map { item -> item.capitalize() }.joinToString("")}RepositoryImpl implements ${folder.name.split("_").map { item -> item.capitalize() }.joinToString("")}Repository {
+  ${folder.name.split("_").map { item -> item.capitalize() }.joinToString("")}RepositoryImpl({required this.${folder.name.split("_").mapIndexed { index, item  -> if (index != 0) item.capitalize() else item }.joinToString("")}ApiService});
 
-  final ${folder.name.capitalize()}ApiService ${folder.name}ApiService;
+  final ${folder.name.split("_").map { item -> item.capitalize() }.joinToString("")}ApiService ${folder.name.split("_").mapIndexed { index, item  -> if (index != 0) item.capitalize() else item }.joinToString("")}ApiService;
 }    
 """
 
@@ -101,7 +101,7 @@ class ${folder.name.capitalize()}RepositoryImpl implements ${folder.name.capital
                 mapOfFolder["repositories"] = mapOfFolder["domain"]?.createChildDirectory(mapOfFolder["domain"], "repositories") ?: throw IOException()
                 mapOfFolder["${folder.name}_repository"] = mapOfFolder["repositories"]?.createChildData(mapOfFolder["repositories"],"${folder.name}_repository.dart") ?: throw IOException()
                 mapOfFolder["${folder.name}_repository"]?.path?.let {
-                    File(it).writeText("abstract interface class ${folder.name.capitalize()}Repository {  }")
+                    File(it).writeText("abstract interface class ${folder.name.split("_").map { item -> item.capitalize() }.joinToString("")}Repository {  }")
                 }
                 return mapOfFolder
             } catch (e: IOException) {
@@ -132,9 +132,9 @@ class ${folder.name.capitalize()}RepositoryImpl implements ${folder.name.capital
 part "${folder.name}_event.dart";
 part "${folder.name}_state.dart";
 
-class ${folder.name.capitalize()}Bloc extends Bloc<${folder.name.capitalize()}Event, ${folder.name.capitalize()}State> {
-  ${folder.name.capitalize()}Bloc() : super(${folder.name.capitalize()}State()) {
-    on<${folder.name.capitalize()}Event>((event, emit) {
+class ${folder.name.split("_").map { item -> item.capitalize() }.joinToString("")}Bloc extends Bloc<${folder.name.split("_").map { item -> item.capitalize() }.joinToString("")}Event, ${folder.name.split("_").map { item -> item.capitalize() }.joinToString("")}State> {
+  ${folder.name.split("_").map { item -> item.capitalize() }.joinToString("")}Bloc() : super(${folder.name.split("_").map { item -> item.capitalize() }.joinToString("")}State()) {
+    on<${folder.name.split("_").map { item -> item.capitalize() }.joinToString("")}Event>((event, emit) {
 
     });
   }
@@ -143,7 +143,7 @@ class ${folder.name.capitalize()}Bloc extends Bloc<${folder.name.capitalize()}Ev
                 val stateContent =
 """part of '${folder.name}_bloc.dart';
 
-enum  ${folder.name.capitalize()}StateStatus {
+enum  ${folder.name.split("_").map { item -> item.capitalize() }.joinToString("")}StateStatus {
   init,
   loading,
   success,
@@ -151,24 +151,24 @@ enum  ${folder.name.capitalize()}StateStatus {
 }
 
 
-extension ${folder.name.capitalize()}CheckStatus on ${folder.name.capitalize()}StateStatus {
-  bool get isInit => this == ${folder.name.capitalize()}StateStatus.init;
-  bool get isLoading => this == ${folder.name.capitalize()}StateStatus.loading;
-  bool get isSuccess => this == ${folder.name.capitalize()}StateStatus.success;
-  bool get isError => this == ${folder.name.capitalize()}StateStatus.error;
+extension ${folder.name.split("_").map { item -> item.capitalize() }.joinToString("")}CheckStatus on ${folder.name.split("_").map { item -> item.capitalize() }.joinToString("")}StateStatus {
+  bool get isInit => this == ${folder.name.split("_").map { item -> item.capitalize() }.joinToString("")}StateStatus.init;
+  bool get isLoading => this == ${folder.name.split("_").map { item -> item.capitalize() }.joinToString("")}StateStatus.loading;
+  bool get isSuccess => this == ${folder.name.split("_").map { item -> item.capitalize() }.joinToString("")}StateStatus.success;
+  bool get isError => this == ${folder.name.split("_").map { item -> item.capitalize() }.joinToString("")}StateStatus.error;
 }
 
-class ${folder.name.capitalize()}State {
-  ${folder.name.capitalize()}State({
-    this.status = ${folder.name.capitalize()}StateStatus.init,
+class ${folder.name.split("_").map { item -> item.capitalize() }.joinToString("")}State {
+  ${folder.name.split("_").map { item -> item.capitalize() }.joinToString("")}State({
+    this.status = ${folder.name.split("_").map { item -> item.capitalize() }.joinToString("")}StateStatus.init,
   });
 
-  final ${folder.name.capitalize()}StateStatus status;
+  final ${folder.name.split("_").map { item -> item.capitalize() }.joinToString("")}StateStatus status;
 
-  ${folder.name.capitalize()}State copyWith({
-    ${folder.name.capitalize()}StateStatus? status,
+  ${folder.name.split("_").map { item -> item.capitalize() }.joinToString("")}State copyWith({
+    ${folder.name.split("_").map { item -> item.capitalize() }.joinToString("")}StateStatus? status,
   }) {
-    return ${folder.name.capitalize()}State(
+    return ${folder.name.split("_").map { item -> item.capitalize() }.joinToString("")}State(
       status: status ?? this.status,
     );
   }
@@ -179,7 +179,7 @@ class ${folder.name.capitalize()}State {
                 val eventContent =
 """part of '${folder.name}_bloc.dart';
 
-sealed class ${folder.name.capitalize()}Event {}   
+sealed class ${folder.name.split("_").map { item -> item.capitalize() }.joinToString("")}Event {}   
 """
 
 
